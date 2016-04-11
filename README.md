@@ -92,10 +92,25 @@ Como ningún asistente se llama _ejemplo 2_ vamos a eliminar este nombre.
 
 ```shell
 > db.asistentes.remove({name: "ejemplo 2"}
-> db.asistentes.find().pretty()
+> db.asistentes.find({}, {_id:0}).pretty()
 ```
 
 ## Replica Set
+Para que los datos siempre estén disponibles se pueden duplicar los documentos en varios servidores, esto se puede hacer creandolos servidores con al opción `--replSet`.
 
+```shell
+$ mongod --replSet "rs0"
+```
+
+Ya con la instancia creada se accede a la consola y se ingresan los siguientes comandos.
+
+```shell
+> rs.initiate()
+> rs.conf()
+> rs.status()
+> rs.add('localhost:27017')
+```
+
+Como consideración, solo se pueden añadir servidores desde el servidor __master__, la elección del __master__ se hace por mayoria, por lo que en algunos casos es necesario añadir un árbitro de la forma `rs.addArb("m1.example.net:30000")`
 
 ## Sharding
