@@ -74,7 +74,18 @@ Como buscar lo que hemos insertado? Hay dos métodos fundamentales para eso, `fi
 Los operadores de busqueda como `$gt` u otros se pueden consultar [acá](https://docs.mongodb.org/manual/reference/operator/query/)
 
 ### Modificar
+Como ningún asistente se llama _ejemplo 1_ vamos a cambiar este nombre, esto se puede hacer de varias maneras.
 
+```shell
+> // reemplazando objetos
+> db.asistentes.update({name: "ejemplo 1"},
+  {name: "ejemplo 1", nickName: "bound3r"}
+)
+> // cambiando elementos
+> db.asistentes.update({name: "ejemplo 1"},
+  {$set: {name: "Daniel"}}
+)
+```
 
 ### Borrar
 
