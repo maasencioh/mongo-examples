@@ -111,6 +111,32 @@ Ya con la instancia creada se accede a la consola y se ingresan los siguientes c
 > rs.add('localhost:27017')
 ```
 
-Como consideración, solo se pueden añadir servidores desde el servidor __master__, la elección del __master__ se hace por mayoria, por lo que en algunos casos es necesario añadir un árbitro de la forma `rs.addArb("m1.example.net:30000")`
+Como consideración, solo se pueden añadir servidores desde el servidor __master__, la elección del __master__ se hace por mayoria, por lo que en algunos casos es necesario añadir un árbitro de la forma `rs.addArb("m1.example.net:30000")`.
 
 ## Sharding
+Cuando la base de datos escale mucho es posible que se necesite dividir los datos en grupos (_chunks_), para esto se necesitan dos tipos de servidores, los clusters y los de configuración.
+
+Primero se deben crear los servidores de configuración, los cuales tienen la finalidad de realizar el enrutamiento a los datos.
+
+```shell
+$ mongod --configsvr --replSet configReplSet --port <port> --dbpath <path>
+```
+
+La conección a estos servidores se realiza por la instancia `mongos` (puede estar en los mismos servidores de configuración).
+
+```shell
+$ mongos --configdb configReplSet/<host1:port1>,<host2:port2>,<host3:port3>
+```
+
+Ya con la instancia creada se accede a la consola (con el host y puerto de `mongos`) y se ingresan los siguientes comandos.
+
+```shell
+> sh.addShard("<rs>/<host>:<port>")
+```
+
+Para haber hecho esto se debieron haber creado unos servidores. A estos servidores luego se debe acceder y habilitar la opción para compartir la base de datos, de la siguente manera.
+
+```shell
+> sh.enableSharding("<database>")
+> sh.shardCollection("<collection>", {<sharedKey>: 1})
+```
