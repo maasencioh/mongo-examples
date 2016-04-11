@@ -48,8 +48,8 @@ db.collection.insert({key: value})
 De manera que creando una base de datos de los asistentes:
 
 ```shell
-> db.asistentes.insert({name: "Miguel", edad: 23})
-> db.asistentes.insert({name: "Ignacio", apodo: "Nacho"})
+> db.asistentes.insert({name: "Miguel", age: 23})
+> db.asistentes.insert({name: "Ignacio", nickName: "Nacho"})
 > db.asistentes.insert([
   {name: "ejemplo 1"},
   {name: "ejemplo 2"}
@@ -57,7 +57,21 @@ De manera que creando una base de datos de los asistentes:
 ```
 
 ### Leer
+Como buscar lo que hemos insertado? Hay dos métodos fundamentales para eso, `find` y `findOne`. La diferencia es que con `find` se devuelven todos los resultados que cumplen el criterio, mientras que `findOne` devuelve el primer resultado que lo haga.
 
+```shell
+> // lista de todos
+> db.asistentes.find()
+> // primer elemento de la lista
+> db.asistentes.findOne()
+> // busca asistente Miguel
+> db.asistentes.find({name: "Miguel"})
+> // primer intento de buscar name de ejemplo
+> db.asistentes.find({name: "ejemplo"})
+> // buscar name de ejemplo
+> db.asistentes.find({name: /ejemplo/})
+```
+Los operadores de busqueda como `$gt` u otros se pueden consultar [acá](https://docs.mongodb.org/manual/reference/operator/query/)
 
 ### Modificar
 
