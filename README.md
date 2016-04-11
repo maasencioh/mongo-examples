@@ -88,8 +88,12 @@ Como ningún asistente se llama _ejemplo 1_ vamos a cambiar este nombre, esto se
 ```
 
 ### Borrar
+Como ningún asistente se llama _ejemplo 2_ vamos a eliminar este nombre.
 
-
+```shell
+> db.asistentes.remove({name: "ejemplo 2"}
+> db.asistentes.find().pretty()
+```
 
 ## Replica Set
 
